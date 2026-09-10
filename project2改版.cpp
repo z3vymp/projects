@@ -5,25 +5,20 @@ using namespace std;
 
 int compScore ( int N ,int M ){//score为单次猜测单独分数
     int score = 0;
-    if (M == N)
-	{
+    if (M == N){
         score = 10;
     }
-    else if (M<= N +1 && M >= N -1)
-    {
+    else if (M<= N +1 && M >= N -1){
         score = 5;
     }
-	else if (M <= N +3 && M >= N -3)	
-    {
+	else if (M <= N +3 && M >= N -3){
         score = 2;
     }
-    else
-    {
+    else{
         score = 0;
     }
     return score;
 }
-
 
 int main() {
     int j = 0;
@@ -36,17 +31,17 @@ int main() {
         int i = 0;
         int M , score = 0;
         int seed = 0;
-        cout << "Please input a seed (input -1 to quit): \n";
+        /*cout << "Please input a seed (input -1 to quit): \n";*/
         cin >> seed;
         if ( seed != -1 ){
             srand(seed);
             int N = rand() % 21;
-            cout << N ;
+            //cout << N ;
             while (i < 10){//次数              
-                cout << "guess the random number zero to twenty: \n";
+                //cout << "guess the random number zero to twenty: \n";
                 cin >> M;
                 while ( M < 0 || M > 20){
-                    cerr << "illegal ,input again\n";
+                    //cerr << "illegal ,input again\n";
                     cin >> M;
                 }
             score = compScore(N, M);//调用算分函数
@@ -59,15 +54,18 @@ int main() {
             break;
         }
     }
-    cout << j ; 
+    //cout << j ; 
     for ( int m = 0 ; m < 10*j ; m++){
         sum += scores[m] ;
     }
-    ave = sum/(float)j;//计算平均分
+    ave = sum/(float)(10*j);//计算平均分
     for ( int m = 0 ; m < 10*j ; m++){
         s1 += pow( scores[m]-ave , 2 ) ;
     }
-    s = sqrt( s1/j );
-    cout <</* "得分标准差为" << */s << endl;
+    s = sqrt( s1/(10.0*j) );
+    if (j == 0) {
+        return 0;
+    }
+    cout << /* "得分标准差为" << */s << endl;
     return 0;
 }
