@@ -72,10 +72,12 @@ float game() {
             } 
             delete[] X;
             X = new_X;
-            size = new_size;
+            size = new_size; 
         }
         X[count++] = oneRound(N);
     }
+    if (count == 0) return 0.0;//防止第一轮输-1出错
+
     for (int i = 0 ; i < count ; i++){
         for(int j = 0 ; j < 10 ; j++){
             sum += X[i][j];
