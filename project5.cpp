@@ -111,8 +111,8 @@ Monster Team::get(int i) const{
 void Team::release (int index){
     if (index < 0 || index >= count) return;
     monsters[index] = monsters[count-1];
-    monsters[count-1] = 0 ;
     count-- ;
+    monsters[count] = 0 ;
 }
 
 Team::~Team(){
@@ -146,17 +146,19 @@ public:
 Trainer::Trainer(const Trainer& t): trainerID(t.trainerID), team(t.team) {}
 
 Trainer& Trainer::operator++(){
-    team.add(Monster(rand() ,rand(), rand()));
+    int x = rand();
+  	int y = rand();
+  	int z = rand();
+    catchMonster(z , y , x);
     return *this;
 }
 
 Monster* Trainer::operator[](int i){
-    if(i > team.getCount() || i <= 0) return NULL;
-    else return &team.monsters[i-1];
+    if(i >= team.getCount() || i < 0) return NULL;
+    else return &team.monsters[i];
 }
 
 Trainer& Trainer::operator+= (const Trainer& t){
-    trainerID += t.trainerID;
     for(int i = 0 ; i < t.team.getCount() ; i++){
         team.add(t.team.get(i));
     }
@@ -164,8 +166,7 @@ Trainer& Trainer::operator+= (const Trainer& t){
 } 
 
 Trainer Trainer::operator+(const Trainer& t){
-    Trainer t0(0);
-    t0.trainerID = trainerID + t.trainerID;
+    Trainer t0(0);  
     for (int i = 0 ; i < team.getCount(); i++){
         t0.team.add(team.monsters[i]);
     }
@@ -178,7 +179,7 @@ Trainer Trainer::operator+(const Trainer& t){
 Trainer::Trainer(int id):trainerID(id){}
 
 ostream& operator<< (ostream& os , const Trainer& t){
-    os << t.trainerID << " : " << t.team. getCount() ;
+    os << t.trainerID << ":" << t.team. getCount() ;
     return os;
 }
 
