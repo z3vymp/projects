@@ -7,13 +7,13 @@ class Bigint {
     char* s;
     size_t len;
     size_t size;
+    bool isZero;
 public:
     Bigint();
     Bigint(size_t t);
     Bigint(const Bigint& t);
     Bigint(const char* t);
     ~Bigint();
-    bool isZero();
     Bigint& operator= (const Bigint& a);
     bool operator== (const Bigint& a);
     bool operator!= (const Bigint& a);

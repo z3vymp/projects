@@ -7,9 +7,19 @@ Bigint::Bigint(): len(1) , size(2){
     s = new char [size];
     s[0] = '0';
     s[1] = '\0';
+    isZero = true;
 }
 
 Bigint::Bigint(size_t t):len(0){
+    if ( t == 0 ) {
+        len = 1;
+        size = 2;
+        s = new char [size];
+        s[0] = '0';
+        s[1] = '\0';
+        isZero = true;
+        return;
+    }
     size_t a = t;
     while (true) {
 	len++;
@@ -23,6 +33,7 @@ Bigint::Bigint(size_t t):len(0){
 	s[(int)len-1-i] = char(t%10+'0');
 	t = t/10;
     }
+    isZero = false;
 }
 
 Bigint::Bigint(const char* t){
@@ -33,6 +44,7 @@ Bigint::Bigint(const char* t){
         s[(int)len] = '\0';
         for ( int i = 0 ; i < len ; i++){
         s[i] = t[i];
+        isZero = (len == 1 && s[0] == '0');
         }
     }
 }
@@ -42,6 +54,7 @@ Bigint::~Bigint() {
 }
 
 Bigint::Bigint(const Bigint& t){
+    isZero = t.isZero;
     len = t.len;
     size = t.size;
     s = new char [size];
@@ -69,11 +82,6 @@ int Bigint::cmp(const Bigint& a){
         }
     }
     return 0;
-}
-
-bool Bigint::isZero(){
-    if ( s[0] == '0' ) return true;
-    else return false;
 }
 
 bool Bigint::operator==(const Bigint& a){
